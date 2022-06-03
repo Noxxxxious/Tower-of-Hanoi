@@ -41,9 +41,9 @@ class TowerOfHanoi {
 			if (n > 0) {
 				solve(n - 1, source, auxiliary, target);
 				moveDisc(source, target);
+				system("cls");
 				print();
 				Sleep(300);
-				system("cls");
 				solve(n - 1, auxiliary, target, source);
 			}
 		}
@@ -74,7 +74,6 @@ int main() {
 	system("cls");
 	toh.print();
 	Sleep(300);
-	system("cls");
 	toh.solve(HANOI_SIZE, 0, 2, 1);
 	return 0;
 }
