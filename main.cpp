@@ -1,6 +1,8 @@
 #include <iostream>
+#include <Windows.h>
 
 #define NUM_OF_TOWERS 3
+#define HANOI_SIZE 5
 
 class TowerOfHanoi {
 	public:
@@ -19,20 +21,31 @@ class TowerOfHanoi {
 			}
 		}
 
-		void moveDisc(int src, int dest) {
-			int src_h = 0;
-			while (towers[src][src_h] == 0) {
-				src_h++;
+		void moveDisc(int source, int target) {
+			int source_h = 0;
+			while (towers[source][source_h] == 0) {
+				source_h++;
 			}
-			int dest_h = num_of_discs;
-			while (towers[dest][dest_h] != 0 ) {
-				dest_h--;
+			int target_h = num_of_discs;
+			while (towers[target][target_h] != 0 ) {
+				target_h--;
 			}
-			if (dest_h != num_of_discs - 1) {
-				if (towers[src][src_h] > towers[dest][dest_h + 1])
+			if (target_h != num_of_discs - 1) {
+				if (towers[source][source_h] > towers[target][target_h + 1])
 					return;
 			}
-			std::swap(towers[src][src_h], towers[dest][dest_h]);
+			std::swap(towers[source][source_h], towers[target][target_h]);
+		}
+
+		void solve(int n, int source, int target, int auxiliary) {
+			if (n > 0) {
+				solve(n - 1, source, auxiliary, target);
+				moveDisc(source, target);
+				print();
+				Sleep(300);
+				system("cls");
+				solve(n - 1, auxiliary, target, source);
+			}
 		}
 
 		void print() {
@@ -56,14 +69,12 @@ class TowerOfHanoi {
 
 };
 
-
 int main() {
-	TowerOfHanoi toh = TowerOfHanoi(5);
-	toh.moveDisc(0, 1);
-	toh.moveDisc(0, 2);
-	toh.moveDisc(1, 2);
-	toh.moveDisc(0, 1);
-	toh.moveDisc(0, 1);
+	TowerOfHanoi toh = TowerOfHanoi(HANOI_SIZE);
+	system("cls");
 	toh.print();
+	Sleep(300);
+	system("cls");
+	toh.solve(HANOI_SIZE, 0, 2, 1);
 	return 0;
 }
